@@ -27,8 +27,8 @@ Partial Class frmRules
         Me.lblExplanation = New System.Windows.Forms.Label()
         Me.lblGeneraton = New System.Windows.Forms.Label()
         Me.lblListOfRules = New System.Windows.Forms.Label()
-        Me.picExample = New System.Windows.Forms.PictureBox()
         Me.btnBack = New System.Windows.Forms.Button()
+        Me.picExample = New System.Windows.Forms.PictureBox()
         CType(Me.picExample, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -78,16 +78,6 @@ Partial Class frmRules
         Me.lblListOfRules.Text = resources.GetString("lblListOfRules.Text")
         Me.lblListOfRules.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'picExample
-        '
-        Me.picExample.Image = Global.GameOfLife.My.Resources.Resources.Diehard
-        Me.picExample.Location = New System.Drawing.Point(156, 126)
-        Me.picExample.Name = "picExample"
-        Me.picExample.Size = New System.Drawing.Size(189, 92)
-        Me.picExample.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picExample.TabIndex = 5
-        Me.picExample.TabStop = False
-        '
         'btnBack
         '
         Me.btnBack.BackColor = System.Drawing.Color.DimGray
@@ -102,6 +92,16 @@ Partial Class frmRules
         Me.btnBack.Text = "Back"
         Me.btnBack.UseVisualStyleBackColor = False
         '
+        'picExample
+        '
+        Me.picExample.Image = Global.GameOfLife.My.Resources.Resources.Diehard
+        Me.picExample.Location = New System.Drawing.Point(156, 126)
+        Me.picExample.Name = "picExample"
+        Me.picExample.Size = New System.Drawing.Size(189, 92)
+        Me.picExample.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.picExample.TabIndex = 5
+        Me.picExample.TabStop = False
+        '
         'frmRules
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -114,6 +114,7 @@ Partial Class frmRules
         Me.Controls.Add(Me.lblGeneraton)
         Me.Controls.Add(Me.lblExplanation)
         Me.Controls.Add(Me.lblRules)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmRules"
         Me.Text = "Rules"
         CType(Me.picExample, System.ComponentModel.ISupportInitialize).EndInit()

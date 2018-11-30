@@ -117,16 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblListOfRules.Text" xml:space="preserve">
-    <value>1. Any live cell with fewer than two live
-neighbors dies, as if by underpopulation.
-2. Any live cell with two or three live neighbors
-lives on to the next generation.
-3. Any live cell with more than three live neighbors
-dies, as if by overpopulation.
-4. Any dead cell with exactly three live neighbors
-becomes a live cell, as if by reproduction</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

@@ -123,6 +123,7 @@ Partial Class frmAbout
         Me.Controls.Add(Me.picJohnHortonConway)
         Me.Controls.Add(Me.lblRules)
         Me.Controls.Add(Me.btnBack)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmAbout"
         Me.Text = "About"
         CType(Me.picJohnHortonConway, System.ComponentModel.ISupportInitialize).EndInit()

@@ -17,4 +17,11 @@ Public Class frmMainMenu
         frmAbout.Show()
 
     End Sub
+
+    Private Sub btnBegin_Click(sender As Object, e As EventArgs) Handles btnBegin.Click
+        ' Displays game form, closes main menu form
+        Me.Hide()
+        frmGame.Show()
+
+    End Sub
 End Class
