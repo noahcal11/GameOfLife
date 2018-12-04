@@ -40,7 +40,7 @@ Partial Class frmGame
         Me.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnBack.Font = New System.Drawing.Font("Sitka Text", 12.0!, System.Drawing.FontStyle.Bold)
         Me.btnBack.ForeColor = System.Drawing.Color.LightGray
-        Me.btnBack.Location = New System.Drawing.Point(623, 12)
+        Me.btnBack.Location = New System.Drawing.Point(729, 12)
         Me.btnBack.Name = "btnBack"
         Me.btnBack.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnBack.Size = New System.Drawing.Size(57, 31)
@@ -50,7 +50,7 @@ Partial Class frmGame
         '
         'tbrSpeed
         '
-        Me.tbrSpeed.Location = New System.Drawing.Point(70, 396)
+        Me.tbrSpeed.Location = New System.Drawing.Point(142, 509)
         Me.tbrSpeed.Name = "tbrSpeed"
         Me.tbrSpeed.Size = New System.Drawing.Size(264, 45)
         Me.tbrSpeed.TabIndex = 10
@@ -59,7 +59,7 @@ Partial Class frmGame
         '
         Me.lblAdjustSpeed.AutoSize = True
         Me.lblAdjustSpeed.Font = New System.Drawing.Font("Prestige Elite Std", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAdjustSpeed.Location = New System.Drawing.Point(138, 433)
+        Me.lblAdjustSpeed.Location = New System.Drawing.Point(210, 546)
         Me.lblAdjustSpeed.Name = "lblAdjustSpeed"
         Me.lblAdjustSpeed.Size = New System.Drawing.Size(128, 18)
         Me.lblAdjustSpeed.TabIndex = 11
@@ -68,7 +68,7 @@ Partial Class frmGame
         'cmbConfigs
         '
         Me.cmbConfigs.FormattingEnabled = True
-        Me.cmbConfigs.Location = New System.Drawing.Point(442, 396)
+        Me.cmbConfigs.Location = New System.Drawing.Point(514, 509)
         Me.cmbConfigs.Name = "cmbConfigs"
         Me.cmbConfigs.Size = New System.Drawing.Size(142, 21)
         Me.cmbConfigs.TabIndex = 12
@@ -79,7 +79,7 @@ Partial Class frmGame
         Me.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnStart.Font = New System.Drawing.Font("Perpetua Titling MT", 18.0!, System.Drawing.FontStyle.Bold)
         Me.btnStart.ForeColor = System.Drawing.Color.DimGray
-        Me.btnStart.Location = New System.Drawing.Point(141, 474)
+        Me.btnStart.Location = New System.Drawing.Point(213, 587)
         Me.btnStart.Name = "btnStart"
         Me.btnStart.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnStart.Size = New System.Drawing.Size(134, 37)
@@ -94,7 +94,7 @@ Partial Class frmGame
         Me.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnStop.Font = New System.Drawing.Font("Perpetua Titling MT", 18.0!, System.Drawing.FontStyle.Bold)
         Me.btnStop.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnStop.Location = New System.Drawing.Point(418, 474)
+        Me.btnStop.Location = New System.Drawing.Point(490, 587)
         Me.btnStop.Name = "btnStop"
         Me.btnStop.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnStop.Size = New System.Drawing.Size(134, 37)
@@ -105,9 +105,10 @@ Partial Class frmGame
         '
         'picGrid
         '
-        Me.picGrid.Location = New System.Drawing.Point(125, 32)
+        Me.picGrid.BackColor = System.Drawing.Color.LightGray
+        Me.picGrid.Location = New System.Drawing.Point(99, 3)
         Me.picGrid.Name = "picGrid"
-        Me.picGrid.Size = New System.Drawing.Size(442, 312)
+        Me.picGrid.Size = New System.Drawing.Size(600, 480)
         Me.picGrid.TabIndex = 8
         Me.picGrid.TabStop = False
         '
@@ -116,7 +117,7 @@ Partial Class frmGame
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DarkGray
-        Me.ClientSize = New System.Drawing.Size(692, 535)
+        Me.ClientSize = New System.Drawing.Size(798, 651)
         Me.Controls.Add(Me.btnStop)
         Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.cmbConfigs)
@@ -126,7 +127,7 @@ Partial Class frmGame
         Me.Controls.Add(Me.btnBack)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmGame"
-        Me.Text = "Game"
+        Me.Text = "Game of Life"
         CType(Me.tbrSpeed, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
