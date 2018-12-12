@@ -1,13 +1,10 @@
 ﻿Option Strict On
+Imports GameOfLife
 
 Public Class frmGame
     ' Declaring public variables
     Public bmp As Bitmap
     Public G As Graphics
-    Public grid(50, 40) As Boolean
-    Public input(50, 40) As Boolean
-    Public change As Boolean = False
-    Public P As New Pen(Color.Black)
 
     Private Sub picGrid_Paint(sender As Object, e As PaintEventArgs) Handles picGrid.Paint
         ' Loads bitmap, graphics, etc and prepares to begin simulation
@@ -16,21 +13,16 @@ Public Class frmGame
         bmp = New Bitmap(600, 480)
         picGrid.Image = bmp
         G = Graphics.FromImage(bmp)
-
-        ' Defining variables for grid
-        Dim x As Integer = 0
-        Dim y As Integer = 0
+        e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.HighSpeed
 
         ' Draws grid
-        For y = 0 To 480
-            For x = 0 To 600
-                G.DrawRectangle(pen:=P, x:=x, y:=y, width:=12, height:=12)
-                x += 12
-            Next
-            x = 0
-            y += 12
+        For x As Integer = 0 To 600
+            G.DrawLine(Pens.DimGray, x * Rules.cellSize.Width, 0, x * Rules.cellSize.Width, Height)
         Next
-
+        For y As Integer = 0 To 480
+            G.DrawLine(Pens.DimGray, 0, y * Rules.cellSize.Height, Width, y * Rules.cellSize.Height)
+        Next
+        Invalidate()
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
@@ -57,6 +49,10 @@ Public Class Cell
     Sub New(x As Point)
         Me.location = x
     End Sub
+
+    Public Shared Widening Operator CType(v As Point) As Cell
+        Throw New NotImplementedException()
+    End Operator
 End Class
 
 Public Enum status
@@ -71,16 +67,29 @@ Public Class Rules
 
 #Region "Properties"
     ' Defines important properties of the game
-#End Region
+
+    Public Shared Property cellSize As New Size(12, 12)
+    Public Property aliveColor As Color = Color.Yellow
     Public intGens As Integer = 0
+    Public Property GridSize As New Size(50, 40)
+#End Region
+
+    ' Defines grid of cells using cell class
+    Private Cells(GridSize.Width - 1, GridSize.Height - 1) As Cell
 
     Sub New()
+        ' Double Buffers graphics: makes it not flicker
         DoubleBuffered = True
         clearArrays()
     End Sub
 
     Public Sub clearArrays()
+        ' Resets the grid
         intGens = 0
-
+        For y As Integer = 0 To GridSize.Width - 1
+            For x As Integer = 0 To GridSize.Height - 1
+                Cells(x, y) = New Point(x, y)
+            Next
+        Next
     End Sub
 End Class
