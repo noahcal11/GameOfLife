@@ -73,7 +73,7 @@ Partial Class frmRules
         Me.lblListOfRules.Font = New System.Drawing.Font("Prestige Elite Std", 11.0!, System.Drawing.FontStyle.Bold)
         Me.lblListOfRules.Location = New System.Drawing.Point(12, 301)
         Me.lblListOfRules.Name = "lblListOfRules"
-        Me.lblListOfRules.Size = New System.Drawing.Size(476, 136)
+        Me.lblListOfRules.Size = New System.Drawing.Size(485, 136)
         Me.lblListOfRules.TabIndex = 4
         Me.lblListOfRules.Text = resources.GetString("lblListOfRules.Text")
         Me.lblListOfRules.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -95,9 +95,9 @@ Partial Class frmRules
         'picExample
         '
         Me.picExample.Image = Global.GameOfLife.My.Resources.Resources.Diehard
-        Me.picExample.Location = New System.Drawing.Point(156, 126)
+        Me.picExample.Location = New System.Drawing.Point(163, 126)
         Me.picExample.Name = "picExample"
-        Me.picExample.Size = New System.Drawing.Size(189, 92)
+        Me.picExample.Size = New System.Drawing.Size(181, 92)
         Me.picExample.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.picExample.TabIndex = 5
         Me.picExample.TabStop = False
