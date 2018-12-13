@@ -110,7 +110,7 @@ Partial Class frmGame
         Me.picGrid.BackColor = System.Drawing.Color.LightGray
         Me.picGrid.Location = New System.Drawing.Point(99, 3)
         Me.picGrid.Name = "picGrid"
-        Me.picGrid.Size = New System.Drawing.Size(600, 480)
+        Me.picGrid.Size = New System.Drawing.Size(601, 481)
         Me.picGrid.TabIndex = 8
         Me.picGrid.TabStop = False
         '
