@@ -30,10 +30,12 @@ Partial Class frmGame
         Me.cmbConfigs = New System.Windows.Forms.ComboBox()
         Me.btnStart = New System.Windows.Forms.Button()
         Me.btnStop = New System.Windows.Forms.Button()
-        Me.picGrid = New System.Windows.Forms.PictureBox()
         Me.speed = New System.Windows.Forms.Timer(Me.components)
+        Me.btnNextGen = New System.Windows.Forms.Button()
+        Me.rlsGrid = New GameOfLife.Rules()
+        Me.lblGenerations = New System.Windows.Forms.Label()
+        Me.btnRestart = New System.Windows.Forms.Button()
         CType(Me.tbrSpeed, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.picGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnBack
@@ -52,7 +54,7 @@ Partial Class frmGame
         '
         'tbrSpeed
         '
-        Me.tbrSpeed.Location = New System.Drawing.Point(142, 509)
+        Me.tbrSpeed.Location = New System.Drawing.Point(72, 506)
         Me.tbrSpeed.Name = "tbrSpeed"
         Me.tbrSpeed.Size = New System.Drawing.Size(264, 45)
         Me.tbrSpeed.TabIndex = 10
@@ -61,7 +63,7 @@ Partial Class frmGame
         '
         Me.lblAdjustSpeed.AutoSize = True
         Me.lblAdjustSpeed.Font = New System.Drawing.Font("Prestige Elite Std", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAdjustSpeed.Location = New System.Drawing.Point(210, 546)
+        Me.lblAdjustSpeed.Location = New System.Drawing.Point(140, 543)
         Me.lblAdjustSpeed.Name = "lblAdjustSpeed"
         Me.lblAdjustSpeed.Size = New System.Drawing.Size(128, 18)
         Me.lblAdjustSpeed.TabIndex = 11
@@ -70,7 +72,7 @@ Partial Class frmGame
         'cmbConfigs
         '
         Me.cmbConfigs.FormattingEnabled = True
-        Me.cmbConfigs.Location = New System.Drawing.Point(514, 509)
+        Me.cmbConfigs.Location = New System.Drawing.Point(546, 506)
         Me.cmbConfigs.Name = "cmbConfigs"
         Me.cmbConfigs.Size = New System.Drawing.Size(142, 21)
         Me.cmbConfigs.TabIndex = 12
@@ -81,7 +83,7 @@ Partial Class frmGame
         Me.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnStart.Font = New System.Drawing.Font("Perpetua Titling MT", 18.0!, System.Drawing.FontStyle.Bold)
         Me.btnStart.ForeColor = System.Drawing.Color.DimGray
-        Me.btnStart.Location = New System.Drawing.Point(213, 587)
+        Me.btnStart.Location = New System.Drawing.Point(104, 582)
         Me.btnStart.Name = "btnStart"
         Me.btnStart.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnStart.Size = New System.Drawing.Size(134, 37)
@@ -96,7 +98,7 @@ Partial Class frmGame
         Me.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnStop.Font = New System.Drawing.Font("Perpetua Titling MT", 18.0!, System.Drawing.FontStyle.Bold)
         Me.btnStop.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnStop.Location = New System.Drawing.Point(490, 587)
+        Me.btnStop.Location = New System.Drawing.Point(282, 582)
         Me.btnStop.Name = "btnStop"
         Me.btnStop.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.btnStop.Size = New System.Drawing.Size(134, 37)
@@ -105,14 +107,51 @@ Partial Class frmGame
         Me.btnStop.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.btnStop.UseVisualStyleBackColor = False
         '
-        'picGrid
+        'speed
         '
-        Me.picGrid.BackColor = System.Drawing.Color.LightGray
-        Me.picGrid.Location = New System.Drawing.Point(99, 3)
-        Me.picGrid.Name = "picGrid"
-        Me.picGrid.Size = New System.Drawing.Size(601, 481)
-        Me.picGrid.TabIndex = 8
-        Me.picGrid.TabStop = False
+        '
+        'btnNextGen
+        '
+        Me.btnNextGen.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.btnNextGen.Font = New System.Drawing.Font("Sitka Text", 10.0!)
+        Me.btnNextGen.Location = New System.Drawing.Point(464, 576)
+        Me.btnNextGen.Name = "btnNextGen"
+        Me.btnNextGen.Size = New System.Drawing.Size(94, 49)
+        Me.btnNextGen.TabIndex = 15
+        Me.btnNextGen.Text = "Next" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "generation"
+        Me.btnNextGen.UseVisualStyleBackColor = False
+        '
+        'rlsGrid
+        '
+        Me.rlsGrid.aliveColor = System.Drawing.Color.Yellow
+        Me.rlsGrid.BackColor = System.Drawing.Color.Gainsboro
+        Me.rlsGrid.GridSize = New System.Drawing.Size(50, 40)
+        Me.rlsGrid.Location = New System.Drawing.Point(99, 12)
+        Me.rlsGrid.Name = "rlsGrid"
+        Me.rlsGrid.Size = New System.Drawing.Size(601, 481)
+        Me.rlsGrid.TabIndex = 16
+        Me.rlsGrid.Text = "Rules1"
+        '
+        'lblGenerations
+        '
+        Me.lblGenerations.AutoSize = True
+        Me.lblGenerations.Font = New System.Drawing.Font("Sitka Text", 10.0!)
+        Me.lblGenerations.Location = New System.Drawing.Point(374, 507)
+        Me.lblGenerations.Name = "lblGenerations"
+        Me.lblGenerations.Size = New System.Drawing.Size(106, 20)
+        Me.lblGenerations.TabIndex = 17
+        Me.lblGenerations.Text = "Generations: 0"
+        '
+        'btnRestart
+        '
+        Me.btnRestart.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.btnRestart.Font = New System.Drawing.Font("Sitka Text", 10.0!)
+        Me.btnRestart.Location = New System.Drawing.Point(609, 582)
+        Me.btnRestart.Name = "btnRestart"
+        Me.btnRestart.Size = New System.Drawing.Size(79, 37)
+        Me.btnRestart.TabIndex = 18
+        Me.btnRestart.Text = "Restart"
+        Me.btnRestart.UseVisualStyleBackColor = False
         '
         'frmGame
         '
@@ -120,29 +159,34 @@ Partial Class frmGame
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.DarkGray
         Me.ClientSize = New System.Drawing.Size(798, 651)
+        Me.Controls.Add(Me.btnRestart)
+        Me.Controls.Add(Me.lblGenerations)
+        Me.Controls.Add(Me.rlsGrid)
+        Me.Controls.Add(Me.btnNextGen)
         Me.Controls.Add(Me.btnStop)
         Me.Controls.Add(Me.btnStart)
         Me.Controls.Add(Me.cmbConfigs)
         Me.Controls.Add(Me.lblAdjustSpeed)
         Me.Controls.Add(Me.tbrSpeed)
-        Me.Controls.Add(Me.picGrid)
         Me.Controls.Add(Me.btnBack)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "frmGame"
         Me.Text = "Game of Life"
         CType(Me.tbrSpeed, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.picGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents btnBack As Button
-    Friend WithEvents picGrid As PictureBox
     Friend WithEvents tbrSpeed As TrackBar
     Friend WithEvents lblAdjustSpeed As Label
     Friend WithEvents cmbConfigs As ComboBox
     Friend WithEvents btnStart As Button
     Friend WithEvents btnStop As Button
     Friend WithEvents speed As Timer
+    Friend WithEvents btnNextGen As Button
+    Friend WithEvents rlsGrid As Rules
+    Friend WithEvents lblGenerations As Label
+    Friend WithEvents btnRestart As Button
 End Class

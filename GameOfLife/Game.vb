@@ -1,42 +1,6 @@
-﻿Option Strict On
-Imports GameOfLife
+﻿Option Explicit Off
 
 Public Class frmGame
-    ' Declaring public variables
-    Public bmp As Bitmap
-    Public G As Graphics
-
-    Private Sub picGrid_Paint(sender As Object, e As PaintEventArgs) Handles picGrid.Paint
-        ' Loads bitmap, graphics, etc and prepares to begin simulations
-
-        ' Creates graphics device
-        bmp = New Bitmap(600, 480)
-        picGrid.Image = bmp
-        G = Graphics.FromImage(bmp)
-        e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.HighSpeed
-
-        ' Draws grid
-        For x As Integer = 0 To 600
-            G.DrawLine(Pens.DimGray, x * Rules.cellSize.Width, 0, x * Rules.cellSize.Width, Height)
-        Next
-        For y As Integer = 0 To 480
-            G.DrawLine(Pens.DimGray, 0, y * Rules.cellSize.Height, Width, y * Rules.cellSize.Height)
-        Next
-
-        'Draw border on entire control.
-        G.DrawRectangle(Pens.DimGray, 0, 0, Width - 1, Height - 1)
-
-        ' Update cells status after each generation
-
-        ' Draw alive cells in yellow
-        For Each cell As Cell In Cells
-            If cell.status = status.Alive Then
-                G.FillRectangle(New SolidBrush(Yellow), New Rectangle(cell.location.X * cellSize.Width, cell.location.Y * cellSize.Height, cellSize.Width, cellSize.Height))
-            End If
-        Next
-
-    End Sub
-
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         ' Hides rules form, shows main menu form
         frmMainMenu.Show()
@@ -44,12 +8,32 @@ Public Class frmGame
 
     End Sub
 
-    Private Sub frmGame_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-        ' Frees memory when form is closed
-        G.Dispose()
-        bmp.Dispose()
-        speed.Dispose()
+    Private Sub btnNextGen_Click(sender As Object, e As EventArgs) Handles btnNextGen.Click
+        ' Advances game by one generation
+        rlsGrid.nextGeneration()
+        lblGenerations.Text = "Generations: " & rlsGrid.intGens.ToString
+    End Sub
 
+    Private Sub btnStart_Click(sender As Object, e As EventArgs) Handles btnStart.Click
+        ' Starts timer
+        speed.Start()
+    End Sub
+
+    Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
+        ' Stops timer
+        speed.Stop()
+    End Sub
+
+    Private Sub speed_Tick(sender As Object, e As EventArgs) Handles speed.Tick
+        ' Advances game by one generation per tick
+        rlsGrid.nextGeneration()
+        lblGenerations.Text = "Generations: " & rlsGrid.intGens.ToString
+    End Sub
+
+    Private Sub btnRestart_Click(sender As Object, e As EventArgs) Handles btnRestart.Click
+        ' Resets grid
+        rlsGrid.clearArrays()
+        speed.Stop()
     End Sub
 End Class
 
@@ -76,14 +60,57 @@ Public Class Rules
 #Region "Properties"
     ' Defines important properties of the game
 
-    Public Shared Property cellSize As New Size(12, 12)
+    Public Property cellSize As New Size(12, 12)
     Public Property aliveColor As Color = Color.Yellow
     Public intGens As Integer = 0
-    Public Property GridSize As New Size(50, 40)
+    Private _GridSize As New Size(50, 40)
+    Public Property GridSize As Size
+        Get
+            Return _GridSize
+        End Get
+        Set(value As Size)
+            _GridSize = value
+            ReDim Cells(_GridSize.Width - 1, _GridSize.Height - 1)
+            Invalidate()
+            clearArrays()
+        End Set
+    End Property
 #End Region
 
     ' Defines grid of cells using cell class
     Private Cells(GridSize.Width - 1, GridSize.Height - 1) As Cell
+
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
+        ' Loads graphics and prepares to begin simulations
+        MyBase.OnPaint(e)
+        Dim g As Graphics = e.Graphics : e.Graphics.SmoothingMode = Drawing2D.SmoothingMode.HighSpeed
+
+        For Each cell As Cell In Cells
+            'Updates the cells that should be dead or alive after last generation.
+            If cell.shouldToggle Then
+                cell.shouldToggle = False
+                toggleCell(cell)
+            End If
+        Next
+
+        For Each cell As Cell In Cells
+            'Draw cells that are alive in selected colour.
+            If cell.status = status.Alive Then
+                g.FillRectangle(New SolidBrush(aliveColor), New Rectangle(cell.location.X * cellSize.Width, cell.location.Y * cellSize.Height, cellSize.Width, cellSize.Height))
+            End If
+        Next
+
+        'Draw grid, dependent on universe size.
+        For x As Integer = 0 To _GridSize.Width
+            g.DrawLine(Pens.Gray, x * cellSize.Width, 0, x * cellSize.Width, Height)
+        Next
+        For y As Integer = 0 To _GridSize.Height
+            g.DrawLine(Pens.Gray, 0, y * cellSize.Height, Width, y * cellSize.Height)
+        Next
+
+        'Draw border on entire control.
+        g.DrawRectangle(Pens.Gray, 0, 0, Width - 1, Height - 1)
+    End Sub
 
     Sub New()
         ' Double Buffers graphics: makes it not flicker
@@ -94,8 +121,8 @@ Public Class Rules
     Public Sub clearArrays()
         ' Resets the grid
         intGens = 0
-        For y As Integer = 0 To GridSize.Width - 1
-            For x As Integer = 0 To GridSize.Height - 1
+        For x As Integer = 0 To GridSize.Width - 1
+            For y As Integer = 0 To GridSize.Height - 1
                 Cells(x, y) = New Cell(New Point(x, y))
             Next
         Next
@@ -115,19 +142,20 @@ Public Class Rules
     Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
         ' Changes status of cell when clicked
         MyBase.OnMouseMove(e)
-        If e.Button = MouseButtons.Left Then
+        If e.Button = Windows.Forms.MouseButtons.Left Then
             Try
-                changeCell(Cells(CInt(Math.Floor(e.X / cellSize.Width)), CInt(Math.Floor(e.Y / cellSize.Height))), status.Alive)
+                changeCell(Cells((Math.Floor(e.X / cellSize.Width)), (Math.Floor(e.Y / cellSize.Height))), status.Alive)
             Catch ex As Exception
                 ' Cell does not exist
             End Try
-        ElseIf e.Button = MouseButtons.Right Then
+        ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
             Try
-                changeCell(Cells(CInt(Math.Floor(e.X / cellSize.Width)), CInt(Math.Floor(e.Y / cellSize.Height))), status.Dead)
+                changeCell(Cells((Math.Floor(e.X / cellSize.Width)), (Math.Floor(e.Y / cellSize.Height))), status.Dead)
             Catch ex As Exception
                 ' Cell does not exist
             End Try
         End If
+        Invalidate()
     End Sub
 
     Private Sub changeCell(sourceCell As Cell, toStatus As status)
@@ -136,6 +164,78 @@ Public Class Rules
     End Sub
 
     Private Sub toggleCell(cell As Cell)
-        cell.status = CType(IIf(cell.status = status.Alive, status.Dead, status.Alive), status)
+        cell.status = IIf(cell.status = status.Alive, status.Dead, status.Alive)
+    End Sub
+
+    Private Function toroidalArray(x As Integer, y As Integer) As Point
+        ' I DON'T KNOW WHAT THIS DOES: FIGURE IT OUT BEFORE I FINISH
+        Dim outputX, outputY As Integer
+        If x > -1 Then
+            outputX = x Mod _GridSize.Width
+        Else
+            outputX = _GridSize.Width - Math.Abs(x)
+        End If
+        If y > -1 Then
+            outputY = y Mod _GridSize.Height
+        Else
+            outputY = _GridSize.Height - Math.Abs(y)
+        End If
+        Return New Point(outputX, outputY)
+    End Function
+
+    Private Function getCellStatus(x As Integer, y As Integer) As status
+        ' Gets status of cells (self explanatory)
+        Return Cells(toroidalArray(x, y).X, toroidalArray(x, y).Y).status
+    End Function
+
+    Private Function neighborStatus(sourceCell As Cell) As Integer
+        ' Returns status of neighbors of each cell
+        Dim neighborCount As Integer = 0
+        ' Up
+        If getCellStatus(sourceCell.location.X, sourceCell.location.Y + 1) = status.Alive Then neighborCount += 1
+        ' Down
+        If getCellStatus(sourceCell.location.X, sourceCell.location.Y - 1) = status.Alive Then neighborCount += 1
+        ' Left
+        If getCellStatus(sourceCell.location.X - 1, sourceCell.location.Y) = status.Alive Then neighborCount += 1
+        ' Right
+        If getCellStatus(sourceCell.location.X + 1, sourceCell.location.Y) = status.Alive Then neighborCount += 1
+        ' UpLeft
+        If getCellStatus(sourceCell.location.X - 1, sourceCell.location.Y + 1) = status.Alive Then neighborCount += 1
+        ' UpRight
+        If getCellStatus(sourceCell.location.X + 1, sourceCell.location.Y + 1) = status.Alive Then neighborCount += 1
+        ' DownLeft
+        If getCellStatus(sourceCell.location.X - 1, sourceCell.location.Y - 1) = status.Alive Then neighborCount += 1
+        ' DownRight
+        If getCellStatus(sourceCell.location.X + 1, sourceCell.location.Y - 1) = status.Alive Then neighborCount += 1
+        Return neighborCount
+    End Function
+
+    Private Sub updateCell(cell As Cell)
+        ' Contains 4 rules of GoL. activates for each cell
+        Dim aliveNeighbors As Integer = neighborStatus(cell)
+        ' Rule 1
+        If cell.status = status.Alive And aliveNeighbors < 2 Then
+            Cells(cell.location.X, cell.location.Y).shouldToggle = True
+            ' Rule 2
+        ElseIf cell.status = status.Alive And (aliveNeighbors = 2 Or aliveNeighbors = 3) Then
+            Cells(cell.location.X, cell.location.Y).shouldToggle = False
+            ' Rule 3
+        ElseIf cell.status = status.Alive And aliveNeighbors > 3 Then
+            Cells(cell.location.X, cell.location.Y).shouldToggle = True
+            ' Rule 4
+        ElseIf cell.status = status.Dead And aliveNeighbors = 3 Then
+            Cells(cell.location.X, cell.location.Y).shouldToggle = True
+        End If
+    End Sub
+
+    Public Sub nextGeneration()
+        ' Updates grid by one generation by updating each cell
+        For y As Integer = 0 To _GridSize.Height - 1
+            For x As Integer = 0 To _GridSize.Width - 1
+                updateCell(Cells(x, y))
+            Next
+        Next
+        intGens += 1
+        Invalidate()
     End Sub
 End Class
