@@ -10,6 +10,7 @@ Public Class frmGame
 
     Private Sub btnNextGen_Click(sender As Object, e As EventArgs) Handles btnNextGen.Click
         ' Advances game by one generation
+        speed.Stop()
         rlsGrid.nextGeneration()
         lblGenerations.Text = "Generations: " & rlsGrid.intGens.ToString
     End Sub
@@ -34,6 +35,19 @@ Public Class frmGame
         ' Resets grid
         rlsGrid.clearArrays()
         speed.Stop()
+        lblGenerations.Text = "Generations: " & rlsGrid.intGens.ToString
+    End Sub
+
+    Private Sub tbrSpeed_Scroll(sender As Object, e As EventArgs) Handles tbrSpeed.Scroll
+        ' Changes speed of timer when trackbar is changed
+        Dim trkBar As TrackBar = CType(sender, TrackBar)
+        speed.Interval = 50 + 25 * (trkBar.Value)
+        lblSpeed.Text = "Interval = " & speed.Interval.ToString & "ms"
+    End Sub
+
+    Private Sub frmGame_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        speed.Interval = 50
+        lblSpeed.Text = "Interval = " & speed.Interval.ToString & "ms"
     End Sub
 End Class
 
@@ -167,25 +181,27 @@ Public Class Rules
         cell.status = IIf(cell.status = status.Alive, status.Dead, status.Alive)
     End Sub
 
-    Private Function toroidalArray(x As Integer, y As Integer) As Point
+    Private Function gridArray(x As Integer, y As Integer) As Point
         ' I DON'T KNOW WHAT THIS DOES: FIGURE IT OUT BEFORE I FINISH
         Dim outputX, outputY As Integer
         If x > -1 Then
             outputX = x Mod _GridSize.Width
         Else
-            outputX = _GridSize.Width - Math.Abs(x)
+            ' This makes it toroidal - loops around and grid has no edges
+            'outputX = _GridSize.Width - Math.Abs(x)
         End If
         If y > -1 Then
             outputY = y Mod _GridSize.Height
         Else
-            outputY = _GridSize.Height - Math.Abs(y)
+            ' This makes it toroidal - loops around and grid has no edges
+            'outputY = _GridSize.Height - Math.Abs(y)
         End If
         Return New Point(outputX, outputY)
     End Function
 
     Private Function getCellStatus(x As Integer, y As Integer) As status
         ' Gets status of cells (self explanatory)
-        Return Cells(toroidalArray(x, y).X, toroidalArray(x, y).Y).status
+        Return Cells(gridArray(x, y).X, gridArray(x, y).Y).status
     End Function
 
     Private Function neighborStatus(sourceCell As Cell) As Integer
