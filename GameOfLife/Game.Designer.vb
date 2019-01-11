@@ -27,7 +27,6 @@ Partial Class frmGame
         Me.btnBack = New System.Windows.Forms.Button()
         Me.tbrSpeed = New System.Windows.Forms.TrackBar()
         Me.lblAdjustSpeed = New System.Windows.Forms.Label()
-        Me.cmbConfigs = New System.Windows.Forms.ComboBox()
         Me.btnStart = New System.Windows.Forms.Button()
         Me.btnStop = New System.Windows.Forms.Button()
         Me.speed = New System.Windows.Forms.Timer(Me.components)
@@ -57,7 +56,7 @@ Partial Class frmGame
         'tbrSpeed
         '
         Me.tbrSpeed.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.tbrSpeed.Location = New System.Drawing.Point(82, 511)
+        Me.tbrSpeed.Location = New System.Drawing.Point(115, 511)
         Me.tbrSpeed.Maximum = 20
         Me.tbrSpeed.Name = "tbrSpeed"
         Me.tbrSpeed.Size = New System.Drawing.Size(286, 45)
@@ -68,20 +67,11 @@ Partial Class frmGame
         Me.lblAdjustSpeed.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblAdjustSpeed.AutoSize = True
         Me.lblAdjustSpeed.Font = New System.Drawing.Font("Prestige Elite Std", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAdjustSpeed.Location = New System.Drawing.Point(161, 548)
+        Me.lblAdjustSpeed.Location = New System.Drawing.Point(194, 548)
         Me.lblAdjustSpeed.Name = "lblAdjustSpeed"
         Me.lblAdjustSpeed.Size = New System.Drawing.Size(128, 18)
         Me.lblAdjustSpeed.TabIndex = 11
         Me.lblAdjustSpeed.Text = "Adjust Speed"
-        '
-        'cmbConfigs
-        '
-        Me.cmbConfigs.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmbConfigs.FormattingEnabled = True
-        Me.cmbConfigs.Location = New System.Drawing.Point(567, 511)
-        Me.cmbConfigs.Name = "cmbConfigs"
-        Me.cmbConfigs.Size = New System.Drawing.Size(142, 21)
-        Me.cmbConfigs.TabIndex = 12
         '
         'btnStart
         '
@@ -149,7 +139,7 @@ Partial Class frmGame
         Me.lblGenerations.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblGenerations.AutoSize = True
         Me.lblGenerations.Font = New System.Drawing.Font("Sitka Text", 10.0!)
-        Me.lblGenerations.Location = New System.Drawing.Point(395, 512)
+        Me.lblGenerations.Location = New System.Drawing.Point(539, 511)
         Me.lblGenerations.Name = "lblGenerations"
         Me.lblGenerations.Size = New System.Drawing.Size(106, 20)
         Me.lblGenerations.TabIndex = 17
@@ -172,7 +162,7 @@ Partial Class frmGame
         Me.lblSpeed.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblSpeed.AutoSize = True
         Me.lblSpeed.Font = New System.Drawing.Font("Prestige Elite Std", 12.0!)
-        Me.lblSpeed.Location = New System.Drawing.Point(146, 566)
+        Me.lblSpeed.Location = New System.Drawing.Point(179, 566)
         Me.lblSpeed.Name = "lblSpeed"
         Me.lblSpeed.Size = New System.Drawing.Size(158, 18)
         Me.lblSpeed.TabIndex = 19
@@ -191,7 +181,6 @@ Partial Class frmGame
         Me.Controls.Add(Me.btnNextGen)
         Me.Controls.Add(Me.btnStop)
         Me.Controls.Add(Me.btnStart)
-        Me.Controls.Add(Me.cmbConfigs)
         Me.Controls.Add(Me.lblAdjustSpeed)
         Me.Controls.Add(Me.tbrSpeed)
         Me.Controls.Add(Me.btnBack)
@@ -207,7 +196,6 @@ Partial Class frmGame
     Friend WithEvents btnBack As Button
     Friend WithEvents tbrSpeed As TrackBar
     Friend WithEvents lblAdjustSpeed As Label
-    Friend WithEvents cmbConfigs As ComboBox
     Friend WithEvents btnStart As Button
     Friend WithEvents btnStop As Button
     Friend WithEvents speed As Timer

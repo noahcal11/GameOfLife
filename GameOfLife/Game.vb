@@ -1,6 +1,4 @@
-﻿Option Explicit Off
-
-Public Class frmGame
+﻿Public Class frmGame
     Private Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         ' Hides rules form, shows main menu form
         frmMainMenu.Show()
@@ -182,19 +180,21 @@ Public Class Rules
     End Sub
 
     Private Function gridArray(x As Integer, y As Integer) As Point
-        ' I DON'T KNOW WHAT THIS DOES: FIGURE IT OUT BEFORE I FINISH
+        ' I DON'T KNOW WHAT THIS DOES BUT IT MAKES IT WORK
         Dim outputX, outputY As Integer
         If x > -1 Then
             outputX = x Mod _GridSize.Width
         Else
-            ' This makes it toroidal - loops around and grid has no edges
-            'outputX = _GridSize.Width - Math.Abs(x)
+            ' This makes it toroidal - loops around and grid has no edges:
+            ' outputX = _GridSize.Width - Math.Abs(x)
+            ' Because this line is commented out, the grid ends on the edges
         End If
         If y > -1 Then
             outputY = y Mod _GridSize.Height
         Else
-            ' This makes it toroidal - loops around and grid has no edges
-            'outputY = _GridSize.Height - Math.Abs(y)
+            ' This makes it toroidal - loops around and grid has no edges:
+            ' outputY = _GridSize.Height - Math.Abs(y)
+            ' Because this line is commented out, the grid ends on the edges
         End If
         Return New Point(outputX, outputY)
     End Function
